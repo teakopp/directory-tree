@@ -8,8 +8,7 @@ A project to manage directories (without actually altering any real directories)
 - [Usage](#usage)
 
 ## Installation 
-To install this project, clone the repository and that's it! 
-**Make sure you have python 3 installed**
+To install this project, clone the repository and that's it! There are no external dependencies just make sure you have python 3 installed.
 
 [Steps to install Python 3](https://docs.python.org/3/using/index.html)
 
