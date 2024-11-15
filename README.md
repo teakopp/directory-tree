@@ -82,7 +82,6 @@ DELETE howdy
 ### Example 4: List Directories
 ```
 LIST
-
 ```
 
 Output:
@@ -96,4 +95,5 @@ howdy
 
 ## Tests
 To run unit tests
+
 `python -m unittest test_directories.py`
