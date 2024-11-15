@@ -11,20 +11,11 @@ def _split_dir(directory):
 	return paths[-2:]
 
 def bfs(directory):
-	visited = set()
-	queue = deque()
-	queue.append(("/", directories["/"]))
-	visited.add("/")
-	while queue:
-		curr_dir, curr_path = queue.popleft()
-		if curr_dir == directory:
-			return curr_path
-		for name, path in curr_path.items():
-			if name not in visited:
-				visited.add(name)
-				queue.append((name, path))
+	paths =  _split_dir(directory)
+	for p in paths:
+		print(p)
+	
 	return None
-
 def create_directory(directory):
 	parent, child = _split_dir(directory)
 
