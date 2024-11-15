@@ -6,15 +6,14 @@ class Directory:
 		self.name = name
 		self.children = {}
 
-class CommandProcessor:
+class DirectoryManager:
 
 	def __init__(self):
 		self.root = Directory("/")
-		self.curr = self.root
 
 	def find_dir(directory):
 		paths = directory.split("/")[:-1]
-		curr = directories
+		curr = DirectoryManager.root
 		for p in paths:
 			if p not in curr:
 				print(f"{p} directory does not exist")
@@ -22,22 +21,26 @@ class CommandProcessor:
 			curr = curr[p]
 		return curr
 
-	def create_directory(directory):
-		curr = find_dir(directory)
+	def create_directory(self, directory):
+		curr = self.find_dir(directory)
 		child = directory.split("/")[-1]
 		curr[child] = {}
 
-	def move_directory(target, location):
-		create_directory(location)
-		delete_directory(target)
+	def move_directory(self, target, location):
+		self.create_directory(location)
+		self.delete_directory(target)
 
-	def delete_directory(directory):
-		curr = find_dir(directory)
+	def delete_directory(self, directory):
+		curr = self.find_dir(directory)
 		child = directory.split("/")[-1]
 		del curr[child]
 
-	def list_directories():
-		for name, path in directories.items():
+	def list_directories(self):
+		for name, path in self.root.items():
 			print(name, path)
 
-directories["/"] = {"home": {"user": {}, "admin": {}}, "etc": {}, "var": {}}
+DirectoryManager = DirectoryManager()
+DirectoryManager.create_directory("/home")
+DirectoryManager.create_directory("/home/user")
+DirectoryManager.create_directory("/home/user/documents")
+DirectoryManager.list_directories()
