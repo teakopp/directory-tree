@@ -4,8 +4,20 @@
 A project to manage directories (without actually altering any real directories) using a series of commands.
 
 ## Table of Contents
+- [Features](#features)
+- [Requirements](#requirements)
 - [Installation](#installation)
 - [Usage](#usage)
+- [Tests](#tests)
+
+## Features
+
+- Create, delete, move, and list directories.
+- Supports hierarchical directory structures.
+
+## Requirements
+
+- Python 3.x
 
 ## Installation 
 To install this project, clone the repository and that's it! There are no external dependencies just make sure you have python 3 installed.
@@ -16,7 +28,6 @@ To install this project, clone the repository and that's it! There are no extern
 git clone https://github.com/yourusername/project-name.git
 cd directory-tree
 ```
-
 
 ## Usage
 Once installed, make sure you’re in the correct directory (`directory-tree`) and then run the script using one of the following commands, depending on your system:
@@ -82,3 +93,7 @@ howdy
   partner
 
 ```
+
+## Tests
+To run unit tests
+`python -m unittest test_directories.py`
