@@ -28,6 +28,9 @@ python3 directories.py   # For macOS
 
 
 The following commands are available for managing the directory tree:
+
+*Note: commands will use uppercase for first word always so `create` is valid as is `CREATE` because it makes typing the commands a little easier.
+
 ### `CREATE`
 - **Usage**: `CREATE <directory>`
 - **Description**: Creates a directory at the specified path. The directory must not already exist.
