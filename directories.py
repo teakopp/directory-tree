@@ -20,8 +20,14 @@ def bfs(directory):
 
 def create_directory(directory):
 	paths = directory.split("/")
-	parent = paths[-2]
-	child = paths[-1]
+	# If there are less than 2 paths it means that the directory is in the root
+	if len(paths) <2:
+		parent = paths[-2]
+		child = paths[-1]
+	else:
+		parent = "/"
+		child = paths
+
 	curr = bfs(parent)
 	curr[child] = {}
 
@@ -37,4 +43,5 @@ directories["/"] = {"home": {"user": {}, "admin": {}}, "etc": {}, "var": {}}
 curr = bfs("user")
 curr["thing"] = {}
 create_directory("home/user/yep")
+create_directory("hi")
 print(directories)
