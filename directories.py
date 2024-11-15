@@ -21,6 +21,16 @@ class DirectoryManager:
 				return None
 			curr = curr.children[p]
 		return curr
+	
+	def find_dir(self, directory):
+		curr = self.find_parent_dir(directory)
+		if curr is None:
+			return None
+		child = directory.split("/")[-1]
+		if child not in curr.children:
+			print(f"{directory} directory does not exist")
+			return None
+		return curr.children[child]
 
 	def create_directory(self, directory):
 		curr = self.find_parent_dir(directory)
@@ -32,20 +42,30 @@ class DirectoryManager:
 		print(f"{directory} already exists")
 		return False
 
-
 	def move_directory(self, target, location):
+		target_dir = self.find_dir(target)
+		location_dir = self.find_dir(location)
+		if location_dir is not None:
+			print(f"{location} already exists")
+			return False
+		if target_dir is None:
+			return False
 		created = self.create_directory(location)
 		if created:
-			self.delete_directory(target)
+			deleted = self.delete_directory(target)
 			print(f"{target} moved to {location}")
 			return True
 		print(f"{target} cannot be moved to {location}")
 		return False
 
 	def delete_directory(self, directory):
-		curr = self.find_parent_dir(directory)
+		parent_dir = self.find_parent_dir(directory)
 		child = directory.split("/")[-1]
-		del curr.children[child]
+		if child not in parent_dir.children:
+			print(f"Can't delete directory. {directory} does not exist")
+			return False
+		del parent_dir.children[child]
+		return True
 
 	def list_directories(self, directory=None, depth=0):
 		if directory is None:
