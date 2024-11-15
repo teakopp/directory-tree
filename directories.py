@@ -59,24 +59,28 @@ class DirectoryManager:
 	def move_directory(self, target, location):
 		# check if both target and location exist
 		# because if either doesn't exist, we should return False early
-		target_dir = self.__find_dir(target)
+		target_dir_parent = self.__find_parent_dir(target)
 		location_dir = self.__find_dir(location)
-		# Do some checks to make sure we can move the target directory
-		# and that it doesn't already exist in the location directory
-		if location_dir is not None:
+
+		target_child = target.split("/")[-1]
+
+		if target_child not in target_dir_parent.children:
+			print(f"{target} does not exist")
+			return False
+		
+		print(f"target: {target_dir_parent.name} child: {target_child}")
+		print(f"location: {location_dir.name}")
+		if target_child in location_dir.children:
 			print(f"{location} already exists")
 			return False
-		if target_dir is None:
-			return False
-		created = self.create_directory(location)
-		# If we successfully created the location directory
-		if created:
-			#delete the target directory
-			self.delete_directory(target)
-			print(f"{target} moved to {location}")
-			return True
-		print(f"{target} cannot be moved to {location}")
-		return False
+		
+		# Move the target directory to the location directory
+		target_directory = target_dir_parent.children.pop(target_child)
+		location_dir.children[target_child] = target_directory
+
+		print(f"{target} moved to {location}")
+
+		return True
 
 	def delete_directory(self, directory):
 		# Make sure the directory exists before we delete it
