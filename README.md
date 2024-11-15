@@ -10,6 +10,7 @@ A project to manage directories (without actually altering any real directories)
 ## Installation 
 To install this project, clone the repository and that's it! 
 **Make sure you have python 3 installed**
+
 [Steps to install Python 3](https://docs.python.org/3/using/index.html)
 
 ```bash
@@ -40,7 +41,7 @@ The following commands are available for managing the directory tree:
 - **Usage**: `DELETE <directory>`
 - **Description**: Deletes the specified directory. The directory must exist and cannot be the root directory.
 
-### `LIST
+### `LIST`
 - **Usage**: `LIST`
 - **Description**: Lists all directories and their children, showing the structure in a tree-like format. Indentation indicates the depth of each directory relative to the root.
 
