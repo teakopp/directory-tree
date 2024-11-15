@@ -8,10 +8,16 @@ class DirectoryManager:
 		self.root = Directory("/")
 
 	def __find_parent_dir(self, directory):
+		# If directory is "/" it's root
 		if directory == "/":
 			return self.root
+		# Split the directory path by "/" and remove the last
+		# because we're only interested in parent directory
 		paths = directory.split("/")[:-1]
+		# Start at the root
 		curr = self.root
+		# Traverse the path to find the parent directory
+		# Like a Trie
 		for p in paths:
 			if p not in curr.children:
 				print(f"{p} directory does not exist")
@@ -20,21 +26,30 @@ class DirectoryManager:
 		return curr
 	
 	def __find_dir(self, directory):
+		# Use find_parent so we don't have to repeat code
 		curr = self.__find_parent_dir(directory)
 		if curr is None:
 			return None
+		# Get the last part of the directory path
+		# This is the child directory we're looking for
 		child = directory.split("/")[-1]
+		# If the child directory is not in the parent directory
 		if child not in curr.children:
+			# Print error message and return None
 			print(f"{directory} directory does not exist")
 			return None
+		# Return the child directory
+		# so other functions can use it
 		return curr.children[child]
 
 	def create_directory(self, directory):
 		parent_dir = self.__find_parent_dir(directory)
 		if parent_dir is None:
 			return False
+		# Last par of directory is the child directory we're creating
 		child = directory.split("/")[-1]
 		if child not in parent_dir.children:
+			# Create the child directory in the parent directory
 			parent_dir.children[child] = Directory(child)
 			print(f"{directory} created")
 			return True
@@ -42,23 +57,32 @@ class DirectoryManager:
 		return False
 
 	def move_directory(self, target, location):
+		# check if both target and location exist
+		# because if either doesn't exist, we should return False early
 		target_dir = self.__find_dir(target)
 		location_dir = self.__find_dir(location)
+		# Do some checks to make sure we can move the target directory
+		# and that it doesn't already exist in the location directory
 		if location_dir is not None:
 			print(f"{location} already exists")
 			return False
 		if target_dir is None:
 			return False
 		created = self.create_directory(location)
+		# If we successfully created the location directory
 		if created:
-			deleted = self.delete_directory(target)
+			#delete the target directory
+			self.delete_directory(target)
 			print(f"{target} moved to {location}")
 			return True
 		print(f"{target} cannot be moved to {location}")
 		return False
 
 	def delete_directory(self, directory):
+		# Make sure the directory exists before we delete it
 		parent_dir = self.__find_parent_dir(directory)
+		# split off child directory so we can check if it's in parent
+		# before we delete it
 		child = directory.split("/")[-1]
 		if child not in parent_dir.children:
 			print(f"Can't delete directory. {directory} does not exist")
@@ -67,15 +91,19 @@ class DirectoryManager:
 		return True
 
 	def list_directories(self, directory=None, depth=0):
-		result = []
+		# If directory is None, we're starting at the root
 		if directory is None:
 			directory = self.root
 		print(" " * depth + directory.name) 
+		# Recursively list all child directories
+		# but add +1 depth each time so we can print the correct number of spaces
+		# and make it look nice
 		for child_name in sorted(directory.children): 
 			self.list_directories(directory.children[child_name], depth + 1)
 		
 
 def validate_command(command, expected_length):
+	# Check if the command has the expected number of arguments
 	if len(command) != expected_length:
 		print(f"{' '.join(command)} is an invalid command")
 		return False
@@ -84,7 +112,10 @@ def validate_command(command, expected_length):
 if __name__ == "__main__":
 	directory_manager = DirectoryManager()
 	while True:
+		# Get user input and split it into a list
 		command = input("\nEnter command (CREATE, DELETE, MOVE, LIST, EXIT): ").split()
+		# Get the first part of the command to determine what action
+		# convert to upper case for case insensitivity because it's easier to use (in my opinion)
 		action = command[0].upper()
 		if action == "CREATE":
 			if not validate_command(command, 2):
@@ -106,5 +137,6 @@ if __name__ == "__main__":
 			print("Exiting program")
 			exit()
 		else:
+			# If the command is not recognized, print an error message
 			print(f"{" ".join(command)} is an invalid command")
 			continue
