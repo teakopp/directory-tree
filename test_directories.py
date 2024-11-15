@@ -21,7 +21,7 @@ class TestDirectories(unittest.TestCase):
 		self.dm.create_directory("user/howdy")
 		self.dm.create_directory("user/hello")
 		self.dm.create_directory("user/hello/pardner")
-		self.assertTrue(self.dm.move_directory("user/hello/pardner", "user/howdy/partner"))
+		self.assertTrue(self.dm.move_directory("user/hello/pardner", "user/howdy"))
 		self.assertFalse(self.dm.move_directory("user/hello/pardner", "user/howdy/partner"))
 	
 	def test_delete_directory(self):

@@ -68,8 +68,6 @@ class DirectoryManager:
 			print(f"{target} does not exist")
 			return False
 		
-		print(f"target: {target_dir_parent.name} child: {target_child}")
-		print(f"location: {location_dir.name}")
 		if target_child in location_dir.children:
 			print(f"{location} already exists")
 			return False
