@@ -3,9 +3,9 @@ import sys
 
 directories = {"/": {}}
 
-def bfs(paths):
+def find_dir(directory):
+	paths = directory.split("/")[:-1]
 	curr = directories["/"]
-	print(paths)
 	for p in paths:
 		if p not in curr:
 			print(f"{p} directory does not exist")
@@ -14,9 +14,8 @@ def bfs(paths):
 	return curr
 
 def create_directory(directory):
-	paths = directory.split("/")
-	curr = bfs(paths[:-1])
-	child = paths[-1]
+	curr = find_dir(directory)
+	child = directory.split("/")[-1]
 	curr[child] = {}
 
 def move_directory(target, location):
@@ -24,9 +23,9 @@ def move_directory(target, location):
 	delete_directory(target)
 
 def delete_directory(directory):
-	paths = directory.split("/")
-	curr = bfs(paths[:-1])
-	del curr[paths[-1]]
+	curr = find_dir(directory)
+	child = directory.split("/")[-1]
+	del curr[child]
 
 def list_directories():
 	for name, path in directories.items():
