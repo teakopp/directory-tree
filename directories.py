@@ -20,9 +20,10 @@ def bfs(directory):
 
 def create_directory(directory):
 	paths = directory.split("/")
-	parent = paths[:-2]
+	parent = paths[-2]
 	child = paths[-1]
-	print(parent, child)
+	curr = bfs(parent)
+	curr[child] = {}
 
 
 def remove_directory(name):
@@ -35,4 +36,5 @@ def list_directories():
 directories["/"] = {"home": {"user": {}, "admin": {}}, "etc": {}, "var": {}}
 curr = bfs("user")
 curr["thing"] = {}
-create_directory("home/user/thing")
+create_directory("home/user/yep")
+print(directories)
