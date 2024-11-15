@@ -26,7 +26,6 @@ def bfs(directory):
 
 def create_directory(directory):
 	parent, child = _split_dir(directory)
-	print(parent, child)
 
 	curr = bfs(parent)
 	if not curr:
@@ -49,3 +48,4 @@ directories["/"] = {"home": {"user": {}, "admin": {}}, "etc": {}, "var": {}}
 curr = bfs("user")
 curr["thing"] = {}
 create_directory("home/user/yep")
+list_directories()
