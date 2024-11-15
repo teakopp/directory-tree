@@ -20,7 +20,9 @@ def create_directory(directory):
 	curr[child] = {}
 
 def move_directory(target, location):
-	created = create_directory(f"{location}/{target_child}")
+	target_paths = target.split("/")
+	location_paths = location.split("/")
+	created = create_directory(f"{location}/{target_paths[-1]}")
 	deleted = delete_directory(target)
 	print(f"Created: {created}, Deleted: {deleted}")
 	if not created or not deleted:
