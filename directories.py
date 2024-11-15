@@ -7,7 +7,6 @@ class Directory:
 		self.children = {}
 
 class DirectoryManager:
-
 	def __init__(self):
 		self.root = Directory("/")
 
@@ -37,12 +36,12 @@ class DirectoryManager:
 
 	def list_directories(self):
 		queue = deque()
-		queue.append(self.root)
+		queue.append(self.root, 0)
 		while queue:
-			curr = queue.popleft()
-			print(curr.name)
+			curr, depth = queue.popleft()
+			print(" " * depth + curr.name)
 			for child in curr.children:
-				queue.append(curr.children[child])
+				queue.append(curr.children[child], depth + 1)
 
 
 if __name__ == "__main__":
