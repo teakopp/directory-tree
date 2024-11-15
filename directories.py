@@ -9,7 +9,7 @@ def bfs(paths):
 	for p in paths:
 		if p not in curr:
 			print(f"{p} directory does not exist")
-			return False
+			return 
 		curr = curr[p]
 	return curr
 
@@ -20,25 +20,13 @@ def create_directory(directory):
 	curr[child] = {}
 
 def move_directory(target, location):
-	target_paths = target.split("/")
-	location_paths = location.split("/")
-	created = create_directory(f"{location}/{target_paths[-1]}")
-	deleted = delete_directory(target)
-	print(f"Created: {created}, Deleted: {deleted}")
-	if not created or not deleted:
-		print("Directory could not be moved")
-		return False
-	return True
-
+	create_directory(location)
+	delete_directory(target)
 
 def delete_directory(directory):
-	parent, child = _split_dir(directory)
-	curr = bfs(parent)
-	if child not in curr:
-		print(f"{child} directory does not exist. It cannot be deleted")
-		return	False
-	del curr[child]
-	return True
+	paths = directory.split("/")
+	curr = bfs(paths[:-1])
+	del curr[paths[-1]]
 
 def list_directories():
 	for name, path in directories.items():
@@ -47,4 +35,10 @@ def list_directories():
 directories["/"] = {"home": {"user": {}, "admin": {}}, "etc": {}, "var": {}}
 list_directories()
 create_directory("home/user/yep")
+list_directories()
+move_directory("home/user/yep","home/admin/yep")
+list_directories()
+create_directory("home/admin/yep/admin")
+list_directories()
+create_directory("home/admin/yep/admin/yep")
 list_directories()
