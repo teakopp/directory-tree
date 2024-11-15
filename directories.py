@@ -1,6 +1,3 @@
-from collections import deque
-import sys
-
 class Directory:
 	def __init__(self, name):
 		self.name = name
@@ -10,7 +7,7 @@ class DirectoryManager:
 	def __init__(self):
 		self.root = Directory("/")
 
-	def find_parent_dir(self, directory):
+	def __find_parent_dir(self, directory):
 		if directory == "/":
 			return self.root
 		paths = directory.split("/")[:-1]
@@ -22,8 +19,8 @@ class DirectoryManager:
 			curr = curr.children[p]
 		return curr
 	
-	def find_dir(self, directory):
-		curr = self.find_parent_dir(directory)
+	def __find_dir(self, directory):
+		curr = self.__find_parent_dir(directory)
 		if curr is None:
 			return None
 		child = directory.split("/")[-1]
@@ -33,18 +30,20 @@ class DirectoryManager:
 		return curr.children[child]
 
 	def create_directory(self, directory):
-		curr = self.find_parent_dir(directory)
+		parent_dir = self.__find_parent_dir(directory)
+		if parent_dir is None:
+			return False
 		child = directory.split("/")[-1]
-		if child not in curr.children:
-			curr.children[child] = Directory(child)
+		if child not in parent_dir.children:
+			parent_dir.children[child] = Directory(child)
 			print(f"{directory} created")
 			return True
 		print(f"{directory} already exists")
 		return False
 
 	def move_directory(self, target, location):
-		target_dir = self.find_dir(target)
-		location_dir = self.find_dir(location)
+		target_dir = self.__find_dir(target)
+		location_dir = self.__find_dir(location)
 		if location_dir is not None:
 			print(f"{location} already exists")
 			return False
@@ -59,7 +58,7 @@ class DirectoryManager:
 		return False
 
 	def delete_directory(self, directory):
-		parent_dir = self.find_parent_dir(directory)
+		parent_dir = self.__find_parent_dir(directory)
 		child = directory.split("/")[-1]
 		if child not in parent_dir.children:
 			print(f"Can't delete directory. {directory} does not exist")
@@ -68,11 +67,13 @@ class DirectoryManager:
 		return True
 
 	def list_directories(self, directory=None, depth=0):
+		result = []
 		if directory is None:
 			directory = self.root
 		print(" " * depth + directory.name) 
 		for child_name in sorted(directory.children): 
 			self.list_directories(directory.children[child_name], depth + 1)
+		
 
 def validate_command(command, expected_length):
 	if len(command) != expected_length:
