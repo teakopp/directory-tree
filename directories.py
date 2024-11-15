@@ -34,14 +34,12 @@ class DirectoryManager:
 		child = directory.split("/")[-1]
 		del curr[child]
 
-	def list_directories(self):
-		queue = deque()
-		queue.append(self.root, 0)
-		while queue:
-			curr, depth = queue.popleft()
-			print(" " * depth + curr.name)
-			for child in curr.children:
-				queue.append(curr.children[child], depth + 1)
+	def list_directories(self, directory=None, depth=0):
+		if directory is None:
+			directory = self.root
+		print(" " * depth + directory.name) 
+		for child_name in sorted(directory.children): 
+			self.list_directories(directory.children[child_name], depth + 1)
 
 
 if __name__ == "__main__":
