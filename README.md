@@ -69,9 +69,7 @@ CREATE hello
 
 ### Example 2: Move a Directory
 ```
-CREATE howdy
-CREATE howdy/partner
-CREATE hello
+Move howdy/partner hello
 ```
 
 ### Example 3: Delete a Directory
