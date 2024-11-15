@@ -29,7 +29,6 @@ def list_directories():
 	for name, path in directories.items():
 		print(name, path)
 
-directories["/"] = {"home": "/home", "etc": "/etc", "var": "/var"}
-directories["/"]["home"] = {"user": {}, "admin": {}}
+directories["/"] = { "/" : {"/"}, "home": "/home", "etc": "/etc", "var": "/var"}
+directories["/"]["home"] = {"user": {"/"}, "admin": {"/"}}
 curr = bfs("user")
-print(curr)
