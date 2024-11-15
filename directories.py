@@ -44,8 +44,19 @@ class DirectoryManager:
 			for child in curr.children:
 				queue.append(curr.children[child])
 
-DirectoryManager = DirectoryManager()
-DirectoryManager.create_directory("home")
-DirectoryManager.create_directory("home/user")
-DirectoryManager.create_directory("home/user/documents")
-DirectoryManager.list_directories()
+
+if __name__ == "__main__":
+	directory_manager = DirectoryManager()
+	while True:
+		command = input("\nEnter command (CREATE, DELETE, MOVE, LIST, EXIT): ").split()
+		if command[0] == "CREATE":
+			directory_manager.create_directory(command[1])
+		elif command[0] == "DELETE":
+			directory_manager.delete_directory(command[1])
+		elif command[0] == "MOVE":
+			directory_manager.move_directory(command[1], command[2])
+		elif command[0] == "LIST":
+			directory_manager.list_directories()
+		elif command[0] == "EXIT":
+			print("Exiting program")
+			exit()
