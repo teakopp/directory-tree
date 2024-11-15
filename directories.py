@@ -81,6 +81,9 @@ class DirectoryManager:
 	def delete_directory(self, directory):
 		# Make sure the directory exists before we delete it
 		parent_dir = self.__find_parent_dir(directory)
+		if parent_dir is None:
+			print(f"Can't delete directory, Parent directory does not exist")
+			return False
 		# split off child directory so we can check if it's in parent
 		# before we delete it
 		child = directory.split("/")[-1]
